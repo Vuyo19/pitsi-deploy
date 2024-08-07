@@ -1,113 +1,141 @@
+'use client'
 import Image from "next/image";
+import { Container } from "./components/Container";
+import Banner from "./components/Banner";
+import { Categories, PitsiFacts, Reasons, Services, Vehicles } from "./utils/constants";
+import Button from "./components/Button";
+import { useTailoredTourModal } from "@/app/hooks/useTailoredTourModal";
+import { useAirportShuttleModal } from "./hooks/useAirportShuttleModal";
+import { useCorporateShuttleModal } from "./hooks/useCorporateShuttle";
 
-export default function Home() {
+export default function Home() { 
+
+
+  const tailoredTourModal = useTailoredTourModal();
+  const airportShuttleModal = useAirportShuttleModal(); 
+  const CorporateShuttleModal = useCorporateShuttleModal(); 
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <Container> 
+        <div>
+          <Banner 
+            title='Giving Time Back To You'
+            img='https://65e81151f52e248c552b-fe74cd567ea2f1228f846834bd67571e.ssl.cf1.rackcdn.com/ldm-images/2019-Mercedes-Benz-C_300-Sedan.png'
+            imgHeight={350}
+            imgWidth={350} />  
+            
+            {/* Available Services */}
+
+            <div> 
+              <h2 className="font-bold text-3xl text-center"> Available Services </h2>  
+              <div className="flex flex-col gap-10 md:flex-row mt-4"> 
+                  {Services.map((service) => (
+                    <div key={service.id} className="px-4 justify-center text-center items-center w-full md:w-1/3 md:text-left md:justify-start md:items-start flex flex-col gap-2"> 
+                        <Image 
+                          src={service.icon}
+                          width={100}
+                          height={100}
+                          alt={service.alt}
+                        /> 
+                        <h3 className="font-bold"> {service.title} </h3>
+                        <p> {service.description} </p> 
+
+                        {/* Button to book the service */} 
+                        {service.id === 1 && (
+                          <Button 
+                            title="Book Now"
+                            onClick={tailoredTourModal.onOpen}
+                          />
+                        )} 
+
+                        {service.id === 2 && (
+                          <Button 
+                            title="Book Now" 
+                            onClick={CorporateShuttleModal.onOpen}
+                          />
+                        )} 
+
+                        {service.id === 3 && (
+                          <Button 
+                            title="Book Now"
+                            onClick={airportShuttleModal.onOpen}
+                          />
+                        )}
+                        
+
+                    </div> 
+                  ))}
+              </div>
+            </div> 
+            
+            {/* Browse Category */}
+            <div> 
+              <h2 className="font-bold text-3xl text-center mb-4 mt-20"> Browse Category </h2> 
+              <div className="flex flex-row gap-0 sm:gap-10 justify-between sm:justify-center items-center"> 
+                  {Categories.map((category) => (
+                    <div key={category.id} className="rounded-lg px-4 py-2 border-2 border-gray-400 items-center text-center"> 
+                        <Image
+                          src={category.icon}
+                          width={60}
+                          height={60}
+                          alt={category.alt}
+                        /> 
+                        <h3 className="font-bold text-lg"> {category.title} </h3>
+                    </div> 
+                  ))}
+              </div> 
+            </div>  
+
+            {/* Explore Available Vehicles */}
+            <div> 
+              <h2 className="font-bold text-3xl text-center mt-20 mb-4"> Explore Available Vehicles </h2>  
+              
+              <div className="flex flex-row gap-0 sm:gap-10 justify-between sm:justify-center items-center"> 
+                {Vehicles.map((vehicle) => (
+                    <div key={vehicle.id} className="rounded-lg h-64 px-4 py-2 border-2 border-gray-400 flex items-center justify-center">
+                    <div className="h-40 relative grid grid-rows-3 items-center justify-items-center">
+                      <div className="flex items-center justify-center mb-2">
+                        <Image
+                          width={200}
+                          height={200}
+                          src={vehicle.image}
+                          alt={vehicle.alt}
+                        />
+                      </div>
+                      <h3 className="font-bold text-lg mt-2 row-start-2"> {vehicle.title} </h3>
+                      <Button
+                        title="Book Now"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Why Choose Us? */} 
+            <div className="mb-10">  
+              <h2 className="font-bold text-3xl text-center mb-4 mt-20"> Why Choose Us? </h2> 
+              <div className="flex flex-col md:flex-row mt-4"> 
+                  {Reasons.map((reason) => (
+                    <div key={reason.id} className="mb-2 md:mb-0 px-4 justify-center text-center items-center w-full md:w-1/2 md:text-left md:justify-start md:items-start flex flex-col gap-2"> 
+                      
+                      <Image 
+                        src={reason.icon}
+                        width={100}
+                        height={100}
+                        alt={reason.alt}
+                      />  
+
+                      <h3 className="font-bold"> {reason.title} </h3>
+                      <p> {reason.description} </p>
+
+
+                    </div>
+                  ))}
+              </div>
+            </div>
         </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </Container>
+    
   );
 }
