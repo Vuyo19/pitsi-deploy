@@ -23,7 +23,7 @@ const ContactUs = () => {
       </div>   
 
       {/* Contact Us */}
-      <div className='mt-10 flex flex-col items-center'> 
+      <div className='mt-20 flex flex-col items-center'> 
         <Image 
             src={'https://static.thenounproject.com/png/185656-200.png'}
             height={75}
