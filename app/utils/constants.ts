@@ -119,7 +119,7 @@ export const Vehicles = [
     {
         id: 2,
         title: 'Mercedes-Benz C Class', 
-        image: 'https://di-uploads-pod7.dealerinspire.com/mercedesbenzofneworleans/uploads/2023/01/mlp-img-top-2023-cclass-temp.png',
+        image: 'https://www.motortrend.com/uploads/sites/10/2018/11/2019-mercedes-benz-c-class-c300-sedan-angular-front.png',
         alt: 'Mercedes-Benz C Class'
     },
     {

@@ -31,7 +31,7 @@ const Range = () => {
                       </div>
                       <h3 className="font-bold text-lg mt-2 row-start-2"> {vehicle.title} </h3>
                       <Button
-                        title="Book Now"
+                        title="Check Availability"
                       />
                     </div>
                   </div>
